@@ -6,6 +6,7 @@ buildscript {
         hilt_version = "2.42"
         room_version = "2.4.3"
         retrofit_version = "2.9.0"
+        ok_http_version = "4.9.3"
         glide_version = "4.13.2"
         rx_java_versions = [
                 rx_android_version: "3.0.0",

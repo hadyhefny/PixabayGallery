@@ -37,6 +37,11 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    externalNativeBuild {
+        cmake {
+            path("CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
@@ -61,6 +66,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
     implementation("com.squareup.retrofit2:adapter-rxjava3:$retrofit_version")
+    // okhttp
+    implementation("com.squareup.okhttp3:logging-interceptor:$ok_http_version")
     // room
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
