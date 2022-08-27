@@ -7,7 +7,8 @@ import retrofit2.http.Query
 
 interface PixabayService {
     @GET("api/")
-    fun getImages(
-        @Query("q") name: String
+    fun searchImages(
+        @Query("q") name: String,
+        @Query("page") page: Int
     ): Single<MainResponse>
 }

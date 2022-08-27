@@ -1,9 +1,10 @@
 package com.hefny.hady.pixabaygallery.modules.images.presentation.model
 
-import com.hefny.hady.pixabaygallery.modules.images.domain.entity.HitsEntity
+import androidx.paging.PagingData
+import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 
 data class ImagesState(
     val isLoading: Boolean = false,
-    val data: HitsEntity? = null,
+    val data: PagingData<ImageEntity>? = null,
     val error: Throwable? = null
 )

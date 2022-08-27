@@ -18,5 +18,5 @@ data class ImageResponse(
     @SerializedName("downloads")
     val noOfDownloads: Long,
     @SerializedName("comments")
-    val noOfComments: String
+    val noOfComments: Long
 )
