@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.hefny.hady.pixabaygallery.databinding.ImageListItemBinding
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 import javax.inject.Inject
@@ -31,13 +32,19 @@ class ImagesPagingAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        item?.let {
+            holder.bind(item)
+        }
     }
 
     class ImagesViewHolder(
-        binding: ImageListItemBinding
+        private val binding: ImageListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(image: ImageEntity?) {
+        fun bind(imageEntity: ImageEntity) {
+            Glide.with(binding.root)
+                .load(imageEntity.previewUrl)
+                .into(binding.ivHit)
+            binding.tvUserName.text = imageEntity.userName
         }
     }
 }

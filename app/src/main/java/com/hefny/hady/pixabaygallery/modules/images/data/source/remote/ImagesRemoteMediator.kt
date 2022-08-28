@@ -1,5 +1,6 @@
 package com.hefny.hady.pixabaygallery.modules.images.data.source.remote
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.LoadType.*
@@ -23,12 +24,15 @@ class ImagesRemoteMediator @Inject constructor(
 ) : RxRemoteMediator<Int, ImageDto>() {
     private val imagesDao = pixabayDatabase.pixabayDao()
     private val remoteKeyDao = pixabayDatabase.remoteKeyDao()
+    private val TAG = "AppDebug"
 
     override fun loadSingle(
         loadType: LoadType,
         state: PagingState<Int, ImageDto>
     ): Single<MediatorResult> {
+        Log.d(TAG, "loadSingle: loadType: $loadType, state: $state")
         return Single.just(loadType)
+            .subscribeOn(Schedulers.io())
             .map {
                 when (it) {
                     REFRESH -> 1
@@ -50,20 +54,33 @@ class ImagesRemoteMediator @Inject constructor(
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
                     pixabayService.searchImages(query, page)
-                        .map {
+                        .flatMap {
                             if (it.imagesResponse.isNotEmpty())
-                                remoteKeyDao.insert(RemoteKeyDto(query, page + 1)).blockingAwait()
-                            it
+                                remoteKeyDao.insert(RemoteKeyDto(query, page + 1))
+                                    .andThen(Single.just(it))
+                            else
+                                Single.just(it)
                         }
-                        .map {
-                            imagesDao.insertAll(it.toEntity().images.toDto()).blockingAwait()
-                            MediatorResult.Success(endOfPaginationReached = it.imagesResponse.isEmpty()) as MediatorResult
+                        .flatMap {
+                            if (it.imagesResponse.isEmpty()) {
+                                Single.just(MediatorResult.Success(endOfPaginationReached = true) as MediatorResult)
+                            } else {
+                                imagesDao.insertAll(it.toEntity().images.toDto(query))
+                                    .andThen(
+                                        Single.just(
+                                            MediatorResult.Success(
+                                                endOfPaginationReached = false
+                                            ) as MediatorResult
+                                        )
+                                    )
+                            }
                         }
                         .doOnError {
+                            Log.d(TAG, "loadSingle: $it")
                             MediatorResult.Error(it)
                         }
                 }
-            }.subscribeOn(Schedulers.io())
+            }
     }
 
     companion object {

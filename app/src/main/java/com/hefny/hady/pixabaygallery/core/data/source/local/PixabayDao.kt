@@ -13,6 +13,6 @@ interface PixabayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(images: List<ImageDto>): Completable
 
-    @Query("SELECT * FROM image WHERE tags LIKE '%' || :query || '%'")
-    fun getImages(query: String): PagingSource<Int, ImageDto>
+    @Query("SELECT * FROM image WHERE `query` = :query ")
+    fun pagingSource(query: String): PagingSource<Int, ImageDto>
 }

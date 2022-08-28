@@ -24,7 +24,7 @@ class ImagesRepositoryImpl
             config = PagingConfig(pageSize = 20),
             remoteMediator = ImagesRemoteMediator(query, pixabayDatabase, pixabayService),
             pagingSourceFactory = {
-                imagesDao.getImages(query)
+                imagesDao.pagingSource(query)
             }
         ).flowable.map { pagingData ->
             pagingData.map { imageDto ->

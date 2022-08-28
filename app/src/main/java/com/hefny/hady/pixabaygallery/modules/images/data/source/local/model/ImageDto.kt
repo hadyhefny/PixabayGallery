@@ -8,6 +8,7 @@ import com.hefny.hady.pixabaygallery.core.data.source.local.IMAGE_TABLE
 @Entity(tableName = IMAGE_TABLE)
 data class ImageDto(
     @PrimaryKey val id: Long,
+    val query: String? = null,
     val tags: String,
     @ColumnInfo(name = "preview_url") val previewUrl: String,
     @ColumnInfo(name = "large_image_url") val largeImageUrl: String,
