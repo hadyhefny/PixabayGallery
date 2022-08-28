@@ -27,6 +27,7 @@ object DatabaseModule {
     }
 
     private fun buildDatabase(context: Context): PixabayDatabase {
-        return Room.databaseBuilder(context, PixabayDatabase::class.java, DATABASE_NAME).build()
+        return Room.databaseBuilder(context, PixabayDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration().build()
     }
 }
