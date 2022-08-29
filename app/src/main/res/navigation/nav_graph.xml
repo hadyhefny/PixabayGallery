@@ -8,6 +8,18 @@
     <fragment
         android:id="@+id/imagesFragment"
         android:name="com.hefny.hady.pixabaygallery.modules.images.presentation.view.ImagesFragment"
-        android:label="fragment_images"
-        tools:layout="@layout/fragment_images" />
+        android:label="Home"
+        tools:layout="@layout/fragment_images" >
+        <action
+            android:id="@+id/action_imagesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.hefny.hady.pixabaygallery.modules.details.view.DetailsFragment"
+        android:label="Details" >
+        <argument
+            android:name="imageEntity"
+            app:argType="com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity" />
+    </fragment>
 </navigation>

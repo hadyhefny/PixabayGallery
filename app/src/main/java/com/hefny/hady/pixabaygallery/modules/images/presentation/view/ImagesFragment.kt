@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.hefny.hady.pixabaygallery.R
 import com.hefny.hady.pixabaygallery.databinding.FragmentImagesBinding
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
@@ -56,7 +57,9 @@ class ImagesFragment : Fragment() {
             .setPositiveButton(
                 getString(R.string.ok)
             ) { _, _ ->
-                // TODO: navigate to details screen
+                val action =
+                    ImagesFragmentDirections.actionImagesFragmentToDetailsFragment(imageEntity)
+                findNavController().navigate(action)
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .create()
