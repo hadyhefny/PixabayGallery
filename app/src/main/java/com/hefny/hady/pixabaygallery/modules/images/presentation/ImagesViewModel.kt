@@ -20,16 +20,19 @@ class ImagesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    init {
-        getImages("fruits")
-    }
-
+    var searchQuery: String = ""
+    var isActionViewExpanded = false
     private val _imagesStateMutableLiveData = MutableLiveData<ImagesState>()
     val imagesStateLiveData: LiveData<ImagesState>
         get() = _imagesStateMutableLiveData
 
+    init {
+        getImages("fruits")
+        searchQuery = ""
+    }
+
     fun getImages(query: String) {
+        searchQuery = query
         getImagesUseCase(query)
             .cachedIn(viewModelScope)
             .doOnSubscribe {
