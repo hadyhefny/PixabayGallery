@@ -1,14 +1,16 @@
 package com.hefny.hady.pixabaygallery.modules.images.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.hefny.hady.pixabaygallery.R
 import com.hefny.hady.pixabaygallery.databinding.FragmentImagesBinding
+import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 import com.hefny.hady.pixabaygallery.modules.images.presentation.ImagesViewModel
 import com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesLoadStateAdapter
 import com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesPagingAdapter
@@ -20,14 +22,13 @@ class ImagesFragment : Fragment() {
 
     private lateinit var binding: FragmentImagesBinding
 
-    private val TAG = "AppDebug"
-
     @Inject
     lateinit var imagesPagingAdapter: ImagesPagingAdapter
 
     @Inject
     lateinit var imagesLoadStateAdapter: ImagesLoadStateAdapter
     private val imagesViewModel: ImagesViewModel by viewModels()
+    private val itemDecorator by lazy { SimpleDividerItemDecoration(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,12 +41,33 @@ class ImagesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initObservation()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        imagesPagingAdapter.onHitClickListener = {
+            showConfirmationDialog(it)
+        }
+    }
+
+    private fun showConfirmationDialog(imageEntity: ImageEntity) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(getString(R.string.confirmation_dialog_msg))
+            .setPositiveButton(
+                getString(R.string.ok)
+            ) { _, _ ->
+                // TODO: navigate to details screen
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .create()
+            .show()
     }
 
     private fun initRecyclerView() {
         with(binding.rvImages) {
             setHasFixedSize(true)
             adapter = imagesPagingAdapter.withLoadStateFooter(imagesLoadStateAdapter)
+            addItemDecoration(itemDecorator)
         }
     }
 
@@ -54,7 +76,6 @@ class ImagesFragment : Fragment() {
             imagesState.data?.let { imagesPagingData ->
                 viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                     imagesPagingAdapter.submitData(imagesPagingData)
-                    Log.d(TAG, "initObservation: ${imagesPagingAdapter.itemCount}")
                 }
             }
         }

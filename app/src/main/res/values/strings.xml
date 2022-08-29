@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PixabayGallery</string>
+    <string name="confirmation_dialog_msg">Do you want to see more details ?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="query_hint">Enter image name</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.hefny.hady.pixabaygallery.modules.images.data.source.remote
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.LoadType.*
@@ -24,13 +23,11 @@ class ImagesRemoteMediator @Inject constructor(
 ) : RxRemoteMediator<Int, ImageDto>() {
     private val imagesDao = pixabayDatabase.pixabayDao()
     private val remoteKeyDao = pixabayDatabase.remoteKeyDao()
-    private val TAG = "AppDebug"
 
     override fun loadSingle(
         loadType: LoadType,
         state: PagingState<Int, ImageDto>
     ): Single<MediatorResult> {
-        Log.d(TAG, "loadSingle: loadType: $loadType, state: $state")
         return Single.just(loadType)
             .subscribeOn(Schedulers.io())
             .map {
@@ -75,8 +72,7 @@ class ImagesRemoteMediator @Inject constructor(
                                     )
                             }
                         }
-                        .doOnError {
-                            Log.d(TAG, "loadSingle: $it")
+                        .onErrorReturn {
                             MediatorResult.Error(it)
                         }
                 }
