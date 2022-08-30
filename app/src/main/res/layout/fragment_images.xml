@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="pagingAdapter"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesPagingAdapter" />
+
+        <variable
+            name="loadAdapter"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesLoadStateAdapter" />
+
+        <variable
+            name="itemDecorator"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.view.SimpleDividerItemDecoration" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".modules.images.presentation.view.ImagesFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvImages"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adapter="@{pagingAdapter.withLoadStateFooter(loadAdapter)}"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            app:itemDecoration="@{itemDecorator}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="@integer/span_count"
+            tools:listitem="@layout/image_list_item" />
+        <include
+            android:id="@+id/layoutLoading"
+            layout="@layout/layout_loading"/>
+
+        <include
+            android:id="@+id/layoutError"
+            layout="@layout/layout_error_view"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
