@@ -3,7 +3,7 @@ package com.hefny.hady.pixabaygallery.modules.images.data.repository
 import androidx.paging.*
 import androidx.paging.rxjava3.flowable
 import com.hefny.hady.pixabaygallery.core.data.source.local.PixabayDatabase
-import com.hefny.hady.pixabaygallery.core.data.source.remote.PixabayService
+import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.PixabayService
 import com.hefny.hady.pixabaygallery.modules.images.data.mapper.toEntity
 import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.ImagesRemoteMediator
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity

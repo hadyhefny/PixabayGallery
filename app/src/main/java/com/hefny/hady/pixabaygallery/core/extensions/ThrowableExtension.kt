@@ -1,7 +1,7 @@
 package com.hefny.hady.pixabaygallery.core.extensions
 
 import com.hefny.hady.pixabaygallery.core.constants.ErrorMessages
-import com.hefny.hady.pixabaygallery.core.data.source.remote.model.ErrorResponse
+import com.hefny.hady.pixabaygallery.core.data.model.ErrorResponse
 import java.io.IOException
 
 fun Throwable.parseError(): ErrorResponse {

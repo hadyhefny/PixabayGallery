@@ -44,8 +44,6 @@ class ImagesFragment : Fragment() {
         binding.pagingAdapter = imagesPagingAdapter
         binding.loadAdapter = imagesLoadStateAdapter
         binding.itemDecorator = itemDecorator
-        binding.imagesViewModel = imagesViewModel
-        binding.lifecycleOwner = this
         return binding.root
     }
 

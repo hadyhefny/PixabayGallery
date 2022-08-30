@@ -6,10 +6,9 @@ import androidx.paging.LoadType.*
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxRemoteMediator
 import com.hefny.hady.pixabaygallery.core.data.source.local.PixabayDatabase
-import com.hefny.hady.pixabaygallery.core.data.source.remote.PixabayService
 import com.hefny.hady.pixabaygallery.modules.images.data.mapper.toEntity
-import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.ImageDto
-import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.RemoteKeyDto
+import com.hefny.hady.pixabaygallery.modules.images.data.model.dto.ImageDto
+import com.hefny.hady.pixabaygallery.modules.images.data.model.dto.RemoteKeyDto
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject

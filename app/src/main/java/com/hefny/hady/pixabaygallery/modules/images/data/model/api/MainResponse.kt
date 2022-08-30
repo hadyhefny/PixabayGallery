@@ -1,4 +1,4 @@
-package com.hefny.hady.pixabaygallery.modules.images.data.source.remote.model
+package com.hefny.hady.pixabaygallery.modules.images.data.model.api
 
 import com.google.gson.annotations.SerializedName
 

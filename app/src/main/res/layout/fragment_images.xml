@@ -16,10 +16,6 @@
         <variable
             name="itemDecorator"
             type="com.hefny.hady.pixabaygallery.modules.images.presentation.view.SimpleDividerItemDecoration" />
-
-        <variable
-            name="imagesViewModel"
-            type="com.hefny.hady.pixabaygallery.modules.images.presentation.ImagesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

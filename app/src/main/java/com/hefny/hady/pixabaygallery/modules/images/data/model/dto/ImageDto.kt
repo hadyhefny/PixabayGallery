@@ -1,4 +1,4 @@
-package com.hefny.hady.pixabaygallery.modules.images.data.source.local.model
+package com.hefny.hady.pixabaygallery.modules.images.data.model.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,7 +1,7 @@
 package com.hefny.hady.pixabaygallery.modules.images.data.mapper
 
-import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.ImageDto
-import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.model.ImageResponse
+import com.hefny.hady.pixabaygallery.modules.images.data.model.dto.ImageDto
+import com.hefny.hady.pixabaygallery.modules.images.data.model.api.ImageResponse
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 
 fun ImageDto.toEntity() = ImageEntity(

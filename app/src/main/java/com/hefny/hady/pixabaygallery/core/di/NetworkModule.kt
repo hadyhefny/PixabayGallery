@@ -1,7 +1,7 @@
 package com.hefny.hady.pixabaygallery.core.di
 
 import com.hefny.hady.pixabaygallery.core.data.source.remote.AuthenticationInterceptor
-import com.hefny.hady.pixabaygallery.core.data.source.remote.PixabayService
+import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.PixabayService
 import com.hefny.hady.pixabaygallery.core.keys.PixabayKeys
 import dagger.Module
 import dagger.Provides

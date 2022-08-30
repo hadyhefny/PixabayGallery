@@ -1,6 +1,6 @@
-package com.hefny.hady.pixabaygallery.core.data.source.remote
+package com.hefny.hady.pixabaygallery.modules.images.data.source.remote
 
-import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.model.MainResponse
+import com.hefny.hady.pixabaygallery.modules.images.data.model.api.MainResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
