@@ -34,13 +34,13 @@ class ImagesViewModel @Inject constructor(
     fun getImages(query: String = "fruits") {
         searchQuery = query
         getImagesUseCase(query)
+            .onBackpressureBuffer()
             .cachedIn(viewModelScope)
             .doOnSubscribe {
                 _imagesStateMutableLiveData.postValue(ImagesState(isLoading = true))
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .onBackpressureBuffer()
             .subscribe({
                 _imagesStateMutableLiveData.value = ImagesState(data = it)
             }, {

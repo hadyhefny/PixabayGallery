@@ -1,6 +1,7 @@
 package com.hefny.hady.pixabaygallery.modules.images.data.mapper
 
 import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.ImageDto
+import com.hefny.hady.pixabaygallery.modules.images.data.source.remote.model.ImageResponse
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 
 fun ImageDto.toEntity() = ImageEntity(
@@ -14,18 +15,16 @@ fun ImageDto.toEntity() = ImageEntity(
     noOfComments
 )
 
-fun List<ImageDto>.toEntity() = map { it.toEntity() }
-
-fun ImageEntity.toDto(query: String) = ImageDto(
+fun ImageResponse.toEntity(query: String) = ImageDto(
     id = id,
     query = query,
     tags = tags,
-    previewUrl = previewUrl,
-    largeImageUrl = largeImageUrl,
+    previewUrl = previewURL,
+    largeImageUrl = largeImageURL,
     userName = userName,
     noOfLikes = noOfLikes,
     noOfDownloads = noOfDownloads,
     noOfComments = noOfComments
 )
 
-fun List<ImageEntity>.toDto(query: String) = map { it.toDto(query) }
+fun List<ImageResponse>.toEntity(query: String) = map { it.toEntity(query) }

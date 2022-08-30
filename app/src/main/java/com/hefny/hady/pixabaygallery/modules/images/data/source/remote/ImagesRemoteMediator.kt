@@ -7,7 +7,6 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxRemoteMediator
 import com.hefny.hady.pixabaygallery.core.data.source.local.PixabayDatabase
 import com.hefny.hady.pixabaygallery.core.data.source.remote.PixabayService
-import com.hefny.hady.pixabaygallery.modules.images.data.mapper.toDto
 import com.hefny.hady.pixabaygallery.modules.images.data.mapper.toEntity
 import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.ImageDto
 import com.hefny.hady.pixabaygallery.modules.images.data.source.local.model.RemoteKeyDto
@@ -23,25 +22,16 @@ class ImagesRemoteMediator @Inject constructor(
 ) : RxRemoteMediator<Int, ImageDto>() {
     private val imagesDao = pixabayDatabase.pixabayDao()
     private val remoteKeyDao = pixabayDatabase.remoteKeyDao()
-
     override fun loadSingle(
         loadType: LoadType,
         state: PagingState<Int, ImageDto>
     ): Single<MediatorResult> {
         return Single.just(loadType)
-            .subscribeOn(Schedulers.io())
             .map {
                 when (it) {
                     REFRESH -> 1
                     PREPEND -> INVALID_PAGE
-                    APPEND -> {
-                        val lastItem = state.lastItemOrNull()
-                        if (lastItem == null) {
-                            INVALID_PAGE
-                        } else {
-                            remoteKeyDao.getRemoteKey(query).blockingGet().page
-                        }
-                    }
+                    APPEND -> remoteKeyDao.getRemoteKey(query).blockingGet().page
                     else -> {
                         INVALID_PAGE
                     }
@@ -62,7 +52,7 @@ class ImagesRemoteMediator @Inject constructor(
                             if (it.imagesResponse.isEmpty()) {
                                 Single.just(MediatorResult.Success(endOfPaginationReached = true) as MediatorResult)
                             } else {
-                                imagesDao.insertAll(it.toEntity().images.toDto(query))
+                                imagesDao.insertAll(it.imagesResponse.toEntity(query))
                                     .andThen(
                                         Single.just(
                                             MediatorResult.Success(
@@ -76,7 +66,7 @@ class ImagesRemoteMediator @Inject constructor(
                             MediatorResult.Error(it)
                         }
                 }
-            }
+            }.subscribeOn(Schedulers.io())
     }
 
     companion object {

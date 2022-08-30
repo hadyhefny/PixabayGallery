@@ -19,6 +19,8 @@ import com.hefny.hady.pixabaygallery.modules.images.presentation.ImagesViewModel
 import com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesLoadStateAdapter
 import com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -114,7 +116,10 @@ class ImagesFragment : Fragment() {
                 it.refresh is LoadState.Error && imagesPagingAdapter.snapshot().isEmpty()
         }
         binding.layoutError.btnRetry.setOnClickListener {
-            imagesViewModel.getImages()
+            imagesPagingAdapter.retry()
+        }
+        imagesLoadStateAdapter.onRetyButonClickListener = {
+            imagesPagingAdapter.retry()
         }
     }
 
@@ -134,6 +139,12 @@ class ImagesFragment : Fragment() {
     }
 
     private fun initObservation() {
+        lifecycleScope.launchWhenStarted {
+            imagesPagingAdapter.loadStateFlow.distinctUntilChangedBy {
+                it.refresh
+            }.filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.rvImages.scrollToPosition(0) }
+        }
         imagesViewModel.imagesStateLiveData.observe(viewLifecycleOwner) { imagesState ->
             imagesState.data?.let { imagesPagingData ->
                 viewLifecycleOwner.lifecycleScope.launchWhenStarted {
