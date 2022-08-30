@@ -5,6 +5,21 @@
 
     <data>
 
+        <variable
+            name="pagingAdapter"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesPagingAdapter" />
+
+        <variable
+            name="loadAdapter"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.adapter.ImagesLoadStateAdapter" />
+
+        <variable
+            name="itemDecorator"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.view.SimpleDividerItemDecoration" />
+
+        <variable
+            name="imagesViewModel"
+            type="com.hefny.hady.pixabaygallery.modules.images.presentation.ImagesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,13 +31,16 @@
             android:id="@+id/rvImages"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:adapter="@{pagingAdapter.withLoadStateFooter(loadAdapter)}"
             android:clipToPadding="false"
             android:paddingTop="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:itemDecoration="@{itemDecorator}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="@integer/span_count"
             tools:listitem="@layout/image_list_item" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

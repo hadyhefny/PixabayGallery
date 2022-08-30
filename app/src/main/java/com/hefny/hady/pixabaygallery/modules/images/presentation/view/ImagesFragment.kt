@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
 import com.hefny.hady.pixabaygallery.R
 import com.hefny.hady.pixabaygallery.databinding.FragmentImagesBinding
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
@@ -39,12 +38,16 @@ class ImagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentImagesBinding.inflate(inflater, container, false)
+        binding.pagingAdapter = imagesPagingAdapter
+        binding.loadAdapter = imagesLoadStateAdapter
+        binding.itemDecorator = itemDecorator
+        binding.imagesViewModel = imagesViewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
         initObservation()
         initListeners()
         initMenu()
@@ -119,18 +122,6 @@ class ImagesFragment : Fragment() {
             .setNegativeButton(getString(R.string.cancel), null)
             .create()
             .show()
-    }
-
-    private fun initRecyclerView() {
-        with(binding.rvImages) {
-            setHasFixedSize(true)
-            adapter = imagesPagingAdapter.withLoadStateFooter(imagesLoadStateAdapter)
-            addItemDecoration(itemDecorator)
-            layoutManager = GridLayoutManager(
-                requireContext(),
-                requireActivity().resources.getInteger(R.integer.span_count)
-            )
-        }
     }
 
     private fun initObservation() {

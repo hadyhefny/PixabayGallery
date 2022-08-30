@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.hefny.hady.pixabaygallery.R
 import com.hefny.hady.pixabaygallery.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
@@ -18,23 +16,7 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        binding.entity = args.imageEntity
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
-
-    private fun initView() {
-        Glide.with(requireContext())
-            .load(args.imageEntity.largeImageUrl)
-            .placeholder(R.drawable.placeholder)
-            .into(binding.ivHit)
-        binding.tvUserName.text = args.imageEntity.userName
-        binding.tvTags.text = args.imageEntity.tags
-        binding.tvLikes.text = args.imageEntity.noOfLikes.toString()
-        binding.tvComment.text = args.imageEntity.noOfComments.toString()
-        binding.tvDownload.text = args.imageEntity.noOfDownloads.toString()
     }
 }

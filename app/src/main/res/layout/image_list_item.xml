@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="entity"
+            type="com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,7 @@
             android:layout_width="150dp"
             android:layout_height="85dp"
             android:scaleType="fitCenter"
+            app:url="@{entity.previewUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@tools:sample/backgrounds/scenic" />
@@ -29,6 +32,7 @@
             android:layout_marginStart="8dp"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:text="@{entity.userName}"
             app:layout_constraintStart_toEndOf="@id/ivHit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textSize="14sp"
+            android:text="@{entity.tags}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivHit"
             app:layout_constraintTop_toBottomOf="@id/tvUserName"
