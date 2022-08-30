@@ -9,6 +9,7 @@ interface PixabayService {
     @GET("api/")
     fun searchImages(
         @Query("q") name: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("order") order: String = "latest"
     ): Single<MainResponse>
 }
