@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.hefny.hady.pixabaygallery.R
+import com.hefny.hady.pixabaygallery.core.extensions.parseError
 import com.hefny.hady.pixabaygallery.databinding.FragmentImagesBinding
 import com.hefny.hady.pixabaygallery.modules.images.domain.entity.ImageEntity
 import com.hefny.hady.pixabaygallery.modules.images.presentation.ImagesViewModel
@@ -105,7 +106,15 @@ class ImagesFragment : Fragment() {
             showConfirmationDialog(it)
         }
         imagesPagingAdapter.addLoadStateListener {
-            binding.clLoading.isVisible = it.refresh is LoadState.Loading
+            binding.layoutLoading.clLoading.isVisible = it.refresh is LoadState.Loading
+            if (it.refresh is LoadState.Error && imagesPagingAdapter.snapshot().isEmpty())
+                binding.layoutError.tvError.text =
+                    (it.refresh as LoadState.Error).error.parseError().message
+            binding.layoutError.clLoading.isVisible =
+                it.refresh is LoadState.Error && imagesPagingAdapter.snapshot().isEmpty()
+        }
+        binding.layoutError.btnRetry.setOnClickListener {
+            imagesViewModel.getImages()
         }
     }
 

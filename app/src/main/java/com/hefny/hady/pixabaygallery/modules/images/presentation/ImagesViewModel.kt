@@ -27,11 +27,11 @@ class ImagesViewModel @Inject constructor(
         get() = _imagesStateMutableLiveData
 
     init {
-        getImages("fruits")
+        getImages()
         searchQuery = ""
     }
 
-    fun getImages(query: String) {
+    fun getImages(query: String = "fruits") {
         searchQuery = query
         getImagesUseCase(query)
             .cachedIn(viewModelScope)
